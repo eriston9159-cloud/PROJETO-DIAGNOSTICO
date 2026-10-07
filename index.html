@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projeto: Troubleshooting de Redes de Computadores</title>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--tx:#1b2430;--mut:#5b6777;--ac:#0b6bcb;--bd:#dde3ec;--code:#0f1b2d;--codetx:#d6e6ff;--ok:#1a7f4b;--bad:#c0392b}
+@media(prefers-color-scheme:dark){:root{--bg:#0e141c;--card:#161e29;--tx:#e6ebf2;--mut:#98a4b5;--ac:#5aa9ff;--bd:#2a3545;--code:#0a0f16;--codetx:#cfe3ff}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
+header{background:linear-gradient(135deg,#0b3b73,#0b6bcb);color:#fff;padding:48px 20px}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+header .wrap{padding:0}
+h1{margin:0 0 8px;font-size:clamp(1.6rem,4vw,2.3rem)}
+header p{margin:0;opacity:.9}
+nav{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--bd);z-index:5}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 20px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--tx);padding:6px 12px;border-radius:20px;font-size:.9rem;border:1px solid var(--bd)}
+nav a:hover{background:var(--ac);color:#fff;border-color:var(--ac)}
+section{margin:36px 0}
+h2{font-size:1.5rem;border-left:5px solid var(--ac);padding-left:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:20px;margin:14px 0}
+.card h3{margin:0 0 6px;color:var(--ac);font-size:1.05rem}
+.card p,.card ul,.card ol{margin:6px 0}
+pre{background:var(--code);color:var(--codetx);padding:14px;border-radius:8px;overflow-x:auto;font-size:.88rem;margin:8px 0}
+code{font-family:ui-monospace,Consolas,monospace}
+p code,li code,td code{background:rgba(11,107,203,.12);padding:1px 6px;border-radius:4px;font-size:.88em}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{border:1px solid var(--bd);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:rgba(11,107,203,.1)}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flow span{background:var(--ac);color:#fff;padding:8px 12px;border-radius:8px;font-size:.9rem}
+.flow i{font-style:normal;color:var(--mut)}
+.tag{display:inline-block;font-size:.75rem;padding:2px 9px;border-radius:12px;background:var(--ac);color:#fff;margin-bottom:6px}
+.sit{border:1px solid var(--bd);border-radius:12px;background:var(--card);margin:14px 0;overflow:hidden}
+.sit>summary{cursor:pointer;padding:16px 20px;font-weight:700;font-size:1.05rem;list-style:none}
+.sit>summary::before{content:"▸ ";color:var(--ac)}
+.sit[open]>summary::before{content:"▾ "}
+.sit .body{padding:0 20px 20px}
+.sit h4{margin:16px 0 4px;font-size:.95rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
+.img{border:2px dashed var(--bd);border-radius:8px;padding:18px;text-align:center;color:var(--mut);font-size:.88rem;margin-top:12px}
+footer{text-align:center;color:var(--mut);padding:30px 20px;font-size:.85rem;border-top:1px solid var(--bd)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>🌐 Troubleshooting de Redes de Computadores</h1>
+<p>Simulação e diagnóstico de 5 situações comuns em redes locais — causas, comandos e soluções.</p>
+</div></header>
+<nav><div class="wrap">
+<a href="#objetivo">Objetivo</a><a href="#metodo">Método</a><a href="#comandos">Comandos</a>
+<a href="#s1">1 Sem internet</a><a href="#s2">2 IP incorreto</a><a href="#s3">3 DNS</a><a href="#s4">4 Cabo</a><a href="#s5">5 Conflito IP</a><a href="#estrutura">Repositório</a>
+</div></nav>
+
+<main class="wrap">
+<section id="objetivo">
+<h2>Objetivo</h2>
+<div class="card"><p>Desenvolver a capacidade de <b>identificar, analisar e solucionar</b> problemas comuns de redes de computadores, utilizando procedimentos e ferramentas de diagnóstico. Para cada situação o projeto descreve o que está acontecendo, as causas prováveis, os comandos para identificar o problema e a solução.</p></div>
+</section>
+
+<section id="metodo">
+<h2>Método de diagnóstico</h2>
+<div class="card">
+<p>Analise sempre de baixo para cima: o primeiro passo que falhar mostra onde está o problema.</p>
+<div class="flow"><span>1 Cabo / Wi-Fi</span><i>→</i><span>2 IP válido</span><i>→</i><span>3 Gateway</span><i>→</i><span>4 Internet por IP</span><i>→</i><span>5 DNS</span></div>
+</div>
+</section>
+
+<section id="comandos">
+<h2>Comandos e ferramentas</h2>
+<div class="card tw"><table>
+<tr><th>Comando</th><th>Finalidade</th></tr>
+<tr><td><code>ipconfig /all</code> · <code>ip a</code></td><td>Mostra IP, máscara, gateway, DNS, MAC e se o DHCP está ativo.</td></tr>
+<tr><td><code>ipconfig /release</code> e <code>/renew</code></td><td>Libera e solicita um novo IP ao servidor DHCP.</td></tr>
+<tr><td><code>ipconfig /flushdns</code></td><td>Limpa o cache de DNS.</td></tr>
+<tr><td><code>ping</code></td><td>Testa conectividade e mede latência e perda de pacotes.</td></tr>
+<tr><td><code>tracert</code> · <code>traceroute</code></td><td>Mostra os saltos até o destino e onde o caminho para.</td></tr>
+<tr><td><code>nslookup</code></td><td>Consulta DNS e mostra qual servidor respondeu.</td></tr>
+<tr><td><code>arp -a</code></td><td>Lista a relação IP ↔ MAC (útil para achar conflitos).</td></tr>
+<tr><td><code>route print</code> · <code>ip route</code></td><td>Exibe a tabela de rotas e o gateway padrão.</td></tr>
+<tr><td><code>netstat -an</code></td><td>Lista conexões e portas em uso.</td></tr>
+<tr><td><code>nbtstat -a &lt;IP&gt;</code></td><td>Identifica nome e MAC de um host da rede.</td></tr>
+</table></div>
+</section>
+
+<section id="situacoes">
+<h2>Situações analisadas</h2>
+
+<details class="sit" id="s1" open>
+<summary>1. Computador sem acesso à internet</summary>
+<div class="body">
+<h4>O que está acontecendo</h4><p>As páginas não carregam no navegador, embora o computador possa estar conectado à rede local.</p>
+<h4>Possíveis causas</h4><ul><li>Roteador/modem sem sinal do provedor</li><li>Gateway incorreto ou ausente</li><li>Falha de DHCP ou de DNS</li><li>Cabo ou Wi-Fi com problema</li><li>Firewall ou proxy</li></ul>
+<h4>Diagnóstico</h4>
+<pre>ipconfig /all
+ping 127.0.0.1        # pilha TCP/IP local
+ping &lt;gateway&gt;        # alcança o roteador?
+ping 8.8.8.8          # alcança a internet por IP?
+ping google.com       # resolve nomes?
+tracert 8.8.8.8       # em qual salto para?</pre>
+<p>Gateway não responde → problema na rede local. Gateway responde e 8.8.8.8 não → roteador/provedor. 8.8.8.8 responde e o nome não → DNS.</p>
+<h4>Solução</h4><ol><li>Reiniciar modem e roteador (30 s desligados).</li><li>Conferir cabos e Wi-Fi.</li><li>Executar <code>ipconfig /release</code> e <code>ipconfig /renew</code>.</li><li>Corrigir gateway/DNS ou voltar ao IP automático.</li><li>Se só o roteador responde, contatar o provedor.</li></ol>
+<div class="img">📷 Print: ping no gateway e em 8.8.8.8 — <code>imagens/01-sem-internet-ping-tracert.png</code></div>
+</div>
+</details>
+
+<details class="sit" id="s2">
+<summary>2. Endereço IP incorreto</summary>
+<div class="body">
+<h4>O que está acontecendo</h4><p>A máquina tem um IP fora da faixa da rede ou recebeu um endereço APIPA (<code>169.254.x.x</code>), sinal de que não encontrou o servidor DHCP.</p>
+<h4>Possíveis causas</h4><ul><li>IP, máscara ou gateway digitados errados</li><li>DHCP desligado ou sem endereços livres</li><li>Falha de cabo/Wi-Fi impedindo contato com o DHCP</li><li>Máquina em rede/VLAN errada</li></ul>
+<h4>Diagnóstico</h4>
+<pre>ipconfig /all    # IP na mesma faixa do gateway? DHCP ativo?
+ping &lt;gateway&gt;   # sem resposta confirma o erro</pre>
+<p>Exemplo correto: IP <code>192.168.1.25</code>, máscara <code>255.255.255.0</code>, gateway <code>192.168.1.1</code>.</p>
+<h4>Solução</h4><ol><li>Corrigir a configuração manual ou escolher <i>Obter endereço IP automaticamente</i>.</li><li>Executar <code>ipconfig /release</code> e <code>ipconfig /renew</code>.</li><li>Verificar cabo, reiniciar roteador/DHCP e conferir o pool de endereços.</li></ol>
+<div class="img">📷 Print: ipconfig /all com IP incorreto — <code>imagens/02-ip-incorreto-ipconfig.png</code></div>
+</div>
+</details>
+
+<details class="sit" id="s3">
+<summary>3. Problema de DNS</summary>
+<div class="body">
+<h4>O que está acontecendo</h4><p>O acesso por IP funciona (<code>ping 8.8.8.8</code>), mas sites por nome não abrem.</p>
+<h4>Possíveis causas</h4><ul><li>Servidor DNS incorreto ou fora do ar</li><li>Cache DNS corrompido</li><li>DNS do roteador com defeito</li><li>Arquivo <code>hosts</code> alterado</li><li>Bloqueio da porta 53 no firewall</li></ul>
+<h4>Diagnóstico</h4>
+<pre>ping 8.8.8.8                  # funciona → internet OK
+ping google.com               # falha → suspeita de DNS
+nslookup google.com           # servidor usado e resposta
+nslookup google.com 8.8.8.8   # testa com outro DNS
+ipconfig /all                 # DNS configurados</pre>
+<p>Se funciona com 8.8.8.8 e não com o DNS atual, o DNS configurado é o culpado.</p>
+<h4>Solução</h4><ol><li><code>ipconfig /flushdns</code></li><li>Trocar o DNS para <code>8.8.8.8</code> / <code>8.8.4.4</code> ou <code>1.1.1.1</code>.</li><li>Reiniciar o roteador.</li><li>Verificar o arquivo <code>hosts</code>.</li></ol>
+<div class="img">📷 Print: nslookup antes e depois da correção — <code>imagens/03-dns-nslookup.png</code></div>
+</div>
+</details>
+
+<details class="sit" id="s4">
+<summary>4. Cabo de rede desconectado ou com defeito</summary>
+<div class="body">
+<h4>O que está acontecendo</h4><p>O ícone de rede mostra um “X” e a mensagem “Cabo de rede desconectado”, ou a conexão cai, fica lenta ou negocia só 10 Mbps.</p>
+<h4>Possíveis causas</h4><ul><li>Cabo solto ou rompido</li><li>Conector RJ-45 mal crimpado ou oxidado</li><li>Porta do switch ou placa de rede com defeito</li><li>Cabo acima de 100 m ou com interferência</li><li>Placa de rede desabilitada</li></ul>
+<h4>Diagnóstico</h4>
+<p>Verificar os LEDs da placa e da porta do switch (apagados = sem link), trocar o cabo, testar outra porta e usar um testador de cabos.</p>
+<pre>ipconfig /all     # "Mídia desconectada" confirma falta de link
+ip link show      # Linux: NO-CARRIER / DOWN
+ping &lt;gateway&gt;    # sem resposta</pre>
+<h4>Solução</h4><ol><li>Reconectar firmemente as duas pontas.</li><li>Trocar o cabo ou refazer o conector RJ-45.</li><li>Usar outra porta do switch.</li><li>Habilitar ou reinstalar o driver da placa.</li><li>Se necessário, trocar a placa ou usar adaptador USB.</li></ol>
+<div class="img">📷 Print: “Mídia desconectada” no ipconfig — <code>imagens/04-cabo-midia-desconectada.png</code></div>
+</div>
+</details>
+
+<details class="sit" id="s5">
+<summary>5. Conflito de endereço IP</summary>
+<div class="body">
+<h4>O que está acontecendo</h4><p>Surge o aviso “Há um conflito de endereço IP”. A conexão fica intermitente e um dos dispositivos pode perder a rede.</p>
+<h4>Possíveis causas</h4><ul><li>Dois dispositivos com o mesmo IP fixo</li><li>IP fixo dentro do pool do DHCP</li><li>Dois servidores DHCP na rede</li><li>Máquina voltando de suspensão com IP antigo</li></ul>
+<h4>Diagnóstico</h4>
+<pre>ipconfig /all          # anote seu IP e MAC
+arp -a                 # MAC associado ao IP em disputa
+ping &lt;IP em conflito&gt;  # outro host responde?
+nbtstat -a &lt;IP&gt;        # nome/MAC do outro dispositivo</pre>
+<p>Se o IP continua respondendo com a sua máquina desconectada, outro dispositivo o está usando. O MAC do <code>arp -a</code> ajuda a localizá-lo.</p>
+<h4>Solução</h4><ol><li>Mudar o IP de um dos dispositivos (fora do pool DHCP) ou usar DHCP.</li><li>Executar <code>ipconfig /release</code> e <code>ipconfig /renew</code>.</li><li>Criar reserva de DHCP (IP fixo por MAC) para equipamentos importantes.</li><li>Remover servidores DHCP duplicados.</li><li>Documentar as faixas de IP fixos e dinâmicos.</li></ol>
+<div class="img">📷 Print: arp -a e aviso de conflito — <code>imagens/05-conflito-arp.png</code></div>
+</div>
+</details>
+</section>
+
+<section id="estrutura">
+<h2>Estrutura do repositório</h2>
+<div class="card"><pre>projeto-troubleshooting-redes/
+├── index.html      # esta página
+├── README.md
+├── docs/           # documentação das soluções (01 a 05)
+├── scripts/        # diagnostico.bat e diagnostico.sh
+└── imagens/        # prints dos testes</pre></div>
+</section>
+</main>
+<footer>Projeto de Redes de Computadores · Autor: (nome, turma e data)</footer>
+</body>
+</html>
